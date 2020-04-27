@@ -377,4 +377,7 @@ e - 回传数据
  "onRespawn" - 玩家重生监听
  "onInputText" - 玩家输入文本监听
  "onInputCommand" - 玩家输入指令监听
+ "onCommandBlockUpdate" - 玩家更新命令方块监听
+ "onLevelExplode" - 爆炸监听
  "onChat" - 聊天监听
+ 

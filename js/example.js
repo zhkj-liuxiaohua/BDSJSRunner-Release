@@ -74,23 +74,20 @@ function afterUseItem(e) {
 // 设置使用物品后事件监听器
 setAfterActListener('onUseItem', afterUseItem);
 
-
-// 设置放置方块后事件监听器
-setAfterActListener('onPlacedBlock', function (e) {
+// 放置方块前监听
+setBeforeActListener('onPlacedBlock', function (e) {
 	var je = JSON.parse(e);
-	if (je.result) {
-		var tnow = TimeNow();
-		var str = '[' + tnow + ' AfterPlaceBlock] ' + '玩家 ' + je.playername +
-			' 于(' + je.XYZ.x + ',' + je.XYZ.y + ',' + je.XYZ.z + ')位置' +
-			(!je.isstand ? ' 悬空地' : '') + ' 在 ' + je.dimension +
-			' (' + je.position.x + ',' + je.position.y + ',' + je.position.z + ') 处放置了 '
-			+ je.blockname + ' 方块。';
-		examplelog(str);
-		flogs.push(str);
-		setTimeout(saveOneLog, 1);
-	}
+	var tnow = TimeNow();
+	var str = '[' + tnow + ' AfterPlaceBlock] ' + '玩家 ' + je.playername +
+		' 于(' + je.XYZ.x + ',' + je.XYZ.y + ',' + je.XYZ.z + ')位置' +
+		(!je.isstand ? ' 悬空地' : '') + ' 在 ' + je.dimension +
+		' (' + je.position.x + ',' + je.position.y + ',' + je.position.z + ') 处试图放置 '
+		+ je.blockname + ' 方块。';
+	examplelog(str);
+	flogs.push(str);
+	setTimeout(saveOneLog, 1);
+	return true;	// 此处或可设置方块放置拦截
 });
-
 
 // 破坏方块后触发回调
 setAfterActListener('onDestroyBlock', function (e) {
@@ -263,6 +260,32 @@ setAfterActListener('onChat', function (e) {
 	}
 });
 
+// 玩家修改命令块回调
+setBeforeActListener('onCommandBlockUpdate', function (e) {
+	var je = JSON.parse(e);
+	var tnow = TimeNow();
+	var str = '[' + tnow + ' AfterCommandBlockUpdate] ' + '玩家 ' + je.playername +
+		' 于(' + je.XYZ.x + ',' + je.XYZ.y + ',' + je.XYZ.z + ')位置' +
+		(!je.isstand ? ' 悬空地' : '') + ' 在 ' + je.dimension +
+		' (' + je.position.x + ',' + je.position.y + ',' + je.position.z + ') 处试图修改 '
+		+ (je.isblock ? '命令块' : '命令矿车') + ' 的指令为 ' + je.cmd + '。';
+	examplelog(str);
+	flogs.push(str);
+	setTimeout(saveOneLog, 1);
+	return true;	// 此处或可拦截命令块更改命令
+});
+
+setBeforeActListener('onLevelExplode', function (e) {
+	var je = JSON.parse(e);
+	var tnow = TimeNow();
+	var str = '[' + tnow + ' BeforeExplode] ' + je.dimension + ' 的(' +
+		je.position.x + ',' + je.position.y + ',' + je.position.z + ')位置 试图发生由 ' +
+		je.entity + ' 引发的爆炸。';
+	examplelog(str);
+	flogs.push(str);
+	setTimeout(saveOneLog, 1);
+	return true;	// 此处或可拦截爆炸事件
+});
 
 // 服务器指令回调
 //setBeforeActListener('onServerCmd', function (e) {
