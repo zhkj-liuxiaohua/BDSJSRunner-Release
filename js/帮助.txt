@@ -1,0 +1,380 @@
+一、说明：
+
+ 本插件平台使用v8引擎作为js解释执行工具。全程采用监听器注册机制以完成特定事件的处理。
+
+二、API接口定义：
+
+/******************************** JSAPI说明部分 ********************************/
+
+// 函数名：fileReadAllText
+// 功能：文件输入流读取一个文本
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：fname - 文件名（相对BDS位置）
+// 返回值：字符串
+[例] let t = fileReadAllText('outjs.js')
+
+// 函数名：fileWriteAllText
+// 功能：文件输出流全新写入一个字符串
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：fname - 文件名（相对BDS位置），content - 文本内容
+// 返回值：是否写成功
+[例] let w = fileWriteAllText('jslog.txt', '测试字符')
+
+// 函数名：fileWriteLine
+// 功能：文件输出流追加一行字符串
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：fname - 文件名（相对BDS位置），content - 追加内容
+// 返回值：是否写成功
+[例] let w = fileWriteLine('jslog.txt', '下一行测试字符')
+
+// 函数名：log
+// 功能：标准输出流打印消息
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：待输出至标准流字符串
+[例] log('你好 js')
+
+// 函数名：logout
+// 功能：发送一条命令输出消息（可被拦截）
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：cmdout - 待发送的命令输出字符串
+[例] logout('执行结果=正确')
+
+// 函数名：TimeNow
+// 功能：返回一个当前时间的字符串
+// 参数个数：0个
+// 返回值 - 字符串
+[例] let t = TimeNow()
+
+// 函数名：setShareData
+// 功能：存入共享数据
+// 参数个数：2个
+// 参数类型：字符串，数据/函数对象
+// 参数详解：key - 关键字，value - 共享数据
+[例] setShareData('TEXT_HELLO', '你好 js')
+
+// 函数名：getShareData
+// 功能：获取共享数据
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：key - 关键字
+// 返回值：共享数据
+[例] let t = getShareData('TEXT_HELLO')
+
+// 函数名：removeShareData
+// 功能：删除共享数据
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：key - 关键字
+// 返回值：旧数据
+[例] let oldt = removeShareData('TEXT_HELLO')
+
+// 函数名：setBeforeActListener
+// 功能：注册玩家事件加载前监听器
+// 参数个数：2个
+// 参数类型：字符串，函数对象
+// 参数详解：key - 注册用关键字，func - 供事件触发时的回调函数对象
+[例] setBeforeActListener('onChat', function (e){ log(e) })
+
+// 函数名：removeBeforeActListener
+// 功能：移除玩家事件监听器
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：key - 注册用关键字
+// 返回值：旧的监听器
+[例] let oldfunc = removeBeforeActListener('onChat')
+
+// 函数名：getBeforeActListener
+// 功能：获取玩家事件监听器
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：key - 注册用关键字
+// 返回值：当前设置的监听器
+[例] let func = getBeforeActListener('onInputText')
+
+// 函数名：setAfterActListener
+// 功能：注册玩家事件加载后监听器
+// 参数个数：2个
+// 参数类型：字符串，函数对象
+// 参数详解：key - 注册用关键字，func - 供事件触发时的回调函数对象
+[例] setAfterActListener('onChat', function (e){ log(e) })
+
+// 函数名：removeAfterActListener
+// 功能：移除玩家事件加载后监听器
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：key - 注册用关键字
+// 返回值：旧监听器
+[例] let oldfunc = removeAfterActListener('onChat')
+
+// 函数名：getAfterActListener
+// 功能：获取玩家事件加载后监听器
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：key - 注册用关键字
+// 返回值：当前设置的监听器
+[例] let func = getAfterActListener('onChat')
+
+// 函数名：runScript
+// 功能：使用全局环境执行一段脚本命令并返回结果
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：script - 语法正确的一段脚本文本
+// 返回值：脚本执行结果
+[例] runScript('log("你好 js")')
+
+// 函数名：runcmd
+// 功能：执行后台指令
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：cmd - 语法正确的MC指令
+// 返回值：是否正常执行
+[例] runcmd('me 你好 js')
+
+// 函数名：getOnLinePlayers
+// 功能：获取在线玩家列表
+// 参数个数：0个
+// 返回值：玩家列表的Json字符串
+[例] let v = getOnLinePlayers()
+
+// 函数名：reNameByUuid
+// 功能：重命名一个指定的玩家名
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，newName - 新的名称
+// 返回值：是否命名成功
+// （备注：该函数可能不会变更客户端实际显示名）
+[例] reNameByUuid('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '请叫我LiuXiaohua')
+
+// 函数名：getPlayerAbilities
+// 功能：获取玩家能力表
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：uuid - 在线玩家的uuid字符串
+// 返回值：能力json字符串
+[例] let a = getPlayerAbilities('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9')
+
+// 函数名：setPlayerAbilities
+// 功能：设置玩家能力表
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，newAbilities - 新能力json数据字符串
+// 返回值：是否设置成功
+// （备注：该函数可能不会变更客户端实际显示能力）
+[例] let r = setPlayerAbilities('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '{"opencontainers": false}')
+
+// 函数名：getPlayerAttributes
+// 功能：获取玩家属性表
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：uuid - 在线玩家的uuid字符串
+// 返回值：属性json字符串
+[例] let t = getPlayerAttributes('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9')
+
+// 函数名：setPlayerAttributes
+// 功能：设置玩家属性表
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，newAttributes - 新属性json数据字符串
+// 返回值：是否设置成功
+// （备注：该函数可能不会变更客户端实际显示值）
+[例] let r = setPlayerAttributes('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '{"attack_damage": 9999}')
+
+// 函数名：getPlayerMaxAttributes
+// 功能：获取玩家属性上限值表
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：uuid - 在线玩家的uuid字符串
+// 返回值：属性上限值json字符串
+[例] let m = getPlayerMaxAttributes('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9')
+
+// 函数名：setPlayerMaxAttributes
+// 功能：设置玩家属性上限值表
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，newMaxAttributes - 新属性上限值json数据字符串
+// 返回值：是否设置成功
+// （备注：该函数可能不会变更客户端实际显示值）
+[例] let r = setPlayerMaxAttributes('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '{"maxhealth": 200}')
+
+// 函数名：getPlayerItems
+// 功能：获取玩家所有物品列表
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：uuid - 在线玩家的uuid字符串
+// 返回值：物品列表json字符串
+[例] let t = getPlayerItems('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9')
+
+// 函数名：getPlayerSelectedItem
+// 功能：获取玩家当前选中项信息
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：uuid - 在线玩家的uuid字符串
+// 返回值：当前选中项信息json字符串
+[例] let i = getPlayerSelectedItem('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9')
+
+// 函数名：setPlayerItems
+// 功能：设置玩家所有物品列表
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，newItems - 新物品列表json数据字符串
+// 返回值：是否设置成功
+// （备注：特定条件下可能不会变更游戏内实际物品）
+[例] let r = setPlayerItems('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9','{"Offhand":{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"Count","cv":{"tt":1,"tv":1}},{"ck":"Damage","cv":{"tt":2,"tv":0}},{"ck":"Name","cv":{"tt":8,"tv":"minecraft:trident"}},{"ck":"tag","cv":{"tt":10,"tv":[{"ck":"ench","cv":{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"id","cv":{"tt":2,"tv":7}},{"ck":"lvl","cv":{"tt":2,"tv":8888}}]}]}}]}}]}]}}')
+
+// 函数名：addPlayerItemEx
+// 功能：增加玩家一个物品
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，item - 物品json数据字符串
+// 返回值：是否添加成功
+// （备注：特定条件下可能不会变更游戏内实际物品）
+[例] let r = setPlayerItems('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '{"tt":10,"tv":[{"ck":"Count","cv":{"tt":1,"tv":1}},{"ck":"Damage","cv":{"tt":2,"tv":0}},{"ck":"Name","cv":{"tt":8,"tv":"minecraft:trident"}},{"ck":"tag","cv":{"tt":10,"tv":[{"ck":"ench","cv":{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"id","cv":{"tt":2,"tv":10}},{"ck":"lvl","cv":{"tt":2,"tv":9999}}]}]}}]}}]}')
+
+// 函数名：addPlayerItem
+// 功能：增加玩家一个物品
+// 参数个数：4个
+// 参数类型：字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，id - 物品id值，aux - 物品特殊值，count - 数量
+// 返回值：是否增加成功
+// （备注：特定条件下可能不会变更游戏内实际物品）
+[例] let r = addPlayerItem('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', 9, 0, 32)
+
+// 函数名：selectPlayer
+// 功能：查询在线玩家基本信息
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：uuid - 在线玩家的uuid字符串
+// 返回值：玩家基本信息json字符串
+[例] let e = selectPlayer('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9')
+
+// 函数名：transferserver
+// 功能：传送玩家至指定服务器
+// 参数个数：3个
+// 参数类型：字符串，字符串，整型
+// 参数详解：uuid - 在线玩家的uuid字符串，addr - 待传服务器，port - 端口
+// 返回值：是否传送成功
+[例] let t = transferserver('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', 'www.xiafox.com', 19132)
+
+// 函数名：teleport
+// 功能：传送玩家至指定坐标和维度
+// 参数个数：5个
+// 参数类型：字符串，浮点型，浮点型，浮点型，整型
+// 参数详解：uuid - 在线玩家的uuid字符串，X - x，Y - y，Z - z，dimensionid - 维度ID
+// 返回值：是否传送成功
+[例] let t = teleport('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', 10, 99, 10, 2)
+
+// 函数名：talkAs
+// 功能：模拟玩家发送一个文本
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，msg - 待模拟发送的文本
+// 返回值：是否发送成功
+[例] let t = talkAs('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '你好 js')
+
+// 函数名：runcmdAs
+// 功能：模拟玩家执行一个指令
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，cmd - 待模拟执行的指令
+// 返回值：是否发送成功
+[例] let t = runcmdAs('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '/me 你好 js')
+
+// 函数名：sendSimpleForm
+// 功能：向指定的玩家发送一个简单表单
+// 参数个数：4个
+// 参数类型：字符串，字符串，字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，title - 表单标题，content - 内容，buttons - 按钮文本数组字符串
+// 返回值：创建的表单id，为 0 表示发送失败
+[例] let fid = sendSimpleForm('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '致命选项', '请选择：', '["生存","死亡","求助"]')
+
+// 函数名：sendModalForm
+// 功能：向指定的玩家发送一个模式对话框
+// 参数个数：5个
+// 参数类型：字符串，字符串，字符串，字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，title - 表单标题，content - 内容，button1 按钮1标题（点击该按钮selected为true），button2 按钮2标题（点击该按钮selected为false）
+// 返回值：创建的表单id，为 0 表示发送失败
+[例] let fid = sendModalForm('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '没有第三个选项', '请选择：', '生存', '死亡')
+
+// 函数名：sendCustomForm
+// 功能：向指定的玩家发送一个自定义表单
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，json - 自定义表单的json字符串（要使用自定义表单类型，参考nk、pm格式或minebbs专栏）
+// 返回值：创建的表单id，为 0 表示发送失败
+[例] let fid = sendCustomForm('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '{"content":[{"type":"label","text":"这是一个文本标签"},{"placeholder":"水印文本","default":"","type":"input","text":""},{"default":true,"type":"toggle","text":"开关~或许是吧"},{"min":0.0,"max":10.0,"step":2.0,"default":3.0,"type":"slider","text":"游标滑块！？"},{"default":1,"steps":["Step 1","Step 2","Step 3"],"type":"step_slider","text":"矩阵滑块？!"},{"default":1,"options":["Option 1","Option 2","Option 3"],"type":"dropdown","text":"如你所见，下拉框"}], "type":"custom_form","title":"这是一个自定义窗体"}')
+
+// 函数名：releaseForm
+// 功能：放弃一个表单
+// 参数个数：1个
+// 参数类型：整型
+// 参数详解：formid - 表单id
+// 返回值：是否释放成功
+//（备注：已被接收到的表单会被自动释放）
+[例] let r = releaseForm(1000)
+
+// 函数名：request
+// 功能：发起一个远程HTTP请求
+// 参数个数：4个
+// 参数类型：字符串，字符串，字符串，函数对象
+// 参数详解：urlpath - 远程接口路径，mode - 访问方式，params - 附加数据，func - 获取结果回调
+[例] request('http://www.baidu.com', 'GET', 'name=act', function(e){})
+
+// 函数名：setTimeout
+// 功能：延时执行一条指令
+// 参数个数：2个
+// 参数类型：字符串/函数，整型
+// 参数详解：code - 待延时执行的指令字符串/函数对象，millisec - 延时毫秒数
+[例] setTimeout('log("你好 js")', 1000)
+
+三、注册机制:
+
+/******************************** 注册接口及回调数据说明 ********************************/
+
+注册范例：
+
+[例] setBeforeActListener(key, function(e){})
+
+key - 关键字
+"onUseItem" - 使用物品回调
+e - 回传数据
+ playername - 玩家名字
+ dimension - 玩家所在维度
+ dimensionid - 玩家所在维度ID
+ isstand - 玩家是否双脚着地/悬空
+ XYZ - 玩家所处位置
+ position - 操作方块所在位置
+ itemid - 物品id
+ itemaux - 物品特殊值
+ itemname - 物品名称
+ result - 原事件操作是否成功(仅限After事件)
+
+其中，对于注册Before事件的函数返回值决定了是否拦截该事件（非全部）。
+其它关键字类推。
+
+ "onServerCmd" - 后台指令监听
+ "onServerCmdOutput" - 后台指令输出信息监听
+ "onFormSelect" - 玩家选择GUI表单监听
+ "onUseItem" - 使用物品监听
+ "onMove" - 移动监听
+ "onAttack" - 攻击监听
+ "onPlacedBlock" - 放置方块监听
+ "onDestroyBlock" - 破坏方块监听
+ "onStartOpenChest" - 开箱监听
+ "onStartOpenBarrel" - 开桶监听
+ "onChangeDimension" - 切换维度监听
+ "onLoadName" - 加载名字监听
+ "onPlayerLeft" - 离开游戏监听
+ "onStopOpenChest" - 关箱监听
+ "onStopOpenBarrel" - 关桶监听
+ "onSetSlot" - 放入取出物品监听
+ "onMobDie" - 生物死亡监听
+ "onMobHurt" - 生物受伤监听
+ "onRespawn" - 玩家重生监听
+ "onInputText" - 玩家输入文本监听
+ "onInputCommand" - 玩家输入指令监听
+ "onChat" - 聊天监听
