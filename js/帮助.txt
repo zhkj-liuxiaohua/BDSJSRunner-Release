@@ -244,6 +244,22 @@
 // （备注：特定条件下可能不会变更游戏内实际物品）
 [例] let r = addPlayerItem('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', 9, 0, 32)
 
+// 函数名：getPlayerEffects
+// 功能：获取玩家所有效果列表
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：uuid - 在线玩家的uuid字符串
+// 返回值：效果列表json字符串
+[例] let e = getPlayerEffects('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9')
+
+// 函数名：setPlayerEffects
+// 功能：设置玩家所有效果列表
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，newEffects - 新效果列表json数据字符串
+// 返回值：是否设置成功
+[例] let r = setPlayerEffects('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"Ambient","cv":{"tt":1,"tv":0}},{"ck":"Amplifier","cv":{"tt":1,"tv":0}},{"ck":"DisplayOnScreenTextureAnimation","cv":{"tt":1,"tv":0}},{"ck":"Duration","cv":{"tt":3,"tv":3461}},{"ck":"DurationEasy","cv":{"tt":3,"tv":3461}},{"ck":"DurationHard","cv":{"tt":3,"tv":3461}},{"ck":"DurationNormal","cv":{"tt":3,"tv":3461}},{"ck":"Id","cv":{"tt":1,"tv":16}},{"ck":"ShowParticles","cv":{"tt":1,"tv":1}}]}]}')
+
 // 函数名：selectPlayer
 // 功能：查询在线玩家基本信息
 // 参数个数：1个
