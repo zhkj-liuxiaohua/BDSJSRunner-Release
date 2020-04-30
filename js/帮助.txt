@@ -73,6 +73,14 @@
 // 返回值：旧数据
 [例] let oldt = removeShareData('TEXT_HELLO')
 
+// 函数名：setCommandDescribe
+// 功能：设置一个全局指令说明
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：cmd - 命令，description - 命令说明
+// 备注：延期注册的情况，可能不会改变客户端界面
+[例] setCommandDescribe('testcase', '这是一个测试用例指令说明')
+
 // 函数名：setBeforeActListener
 // 功能：注册玩家事件加载前监听器
 // 参数个数：2个

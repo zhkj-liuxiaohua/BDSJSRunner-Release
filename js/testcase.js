@@ -279,4 +279,7 @@ setBeforeActListener('onInputCommand', function (e) {
 	return true;
 });
 
+// 注册指令
+setCommandDescribe('testcase', '测试附加功能是否正常');
+
 log('testcase 已加载。用法(仅限玩家)：/testcase');
