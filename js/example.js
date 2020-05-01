@@ -74,19 +74,20 @@ function afterUseItem(e) {
 // 设置使用物品后事件监听器
 setAfterActListener('onUseItem', afterUseItem);
 
-// 放置方块前监听
-setBeforeActListener('onPlacedBlock', function (e) {
+// 放置方块后监听
+setAfterActListener('onPlacedBlock', function (e) {
 	var je = JSON.parse(e);
-	var tnow = TimeNow();
-	var str = '[' + tnow + ' AfterPlaceBlock] ' + '玩家 ' + je.playername +
-		' 于(' + je.XYZ.x + ',' + je.XYZ.y + ',' + je.XYZ.z + ')位置' +
-		(!je.isstand ? ' 悬空地' : '') + ' 在 ' + je.dimension +
-		' (' + je.position.x + ',' + je.position.y + ',' + je.position.z + ') 处试图放置 '
-		+ je.blockname + ' 方块。';
-	examplelog(str);
-	flogs.push(str);
-	setTimeout(saveOneLog, 1);
-	return true;	// 此处或可设置方块放置拦截
+	if (je.result) {
+		var tnow = TimeNow();
+		var str = '[' + tnow + ' AfterPlaceBlock] ' + '玩家 ' + je.playername +
+			' 于(' + je.XYZ.x + ',' + je.XYZ.y + ',' + je.XYZ.z + ')位置' +
+			(!je.isstand ? ' 悬空地' : '') + ' 在 ' + je.dimension +
+			' (' + je.position.x + ',' + je.position.y + ',' + je.position.z + ') 处放置了 '
+			+ je.blockname + ' 方块。';
+		examplelog(str);
+		flogs.push(str);
+		setTimeout(saveOneLog, 1);
+    }
 });
 
 // 破坏方块后触发回调
@@ -291,6 +292,12 @@ setBeforeActListener('onLevelExplode', function (e) {
 //setBeforeActListener('onServerCmd', function (e) {
 //	let je = JSON.parse(e);
 //	return true;	// 此处或可拦截后台输入的指令
+//});
+
+// 命令方块指令回调
+//setBeforeActListener('onBlockCmd', function (e) {
+//	let je = JSON.parse(e);
+//	return true;	// 此处或可拦截命令方块及命令方块矿车指令的执行
 //});
 
 // 服务器指令执行输出回调
