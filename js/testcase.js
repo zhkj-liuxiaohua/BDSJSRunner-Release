@@ -30,7 +30,7 @@ function getUuid(p) {
 const strtest = ['后台指令tell', '前缀/去前缀名', '穿墙能力开/关', '传送至梦之故里大厅', '跨维传送至末地祭坛', '模拟喊话', '模拟执行me指令',
 	'查询当前状态至后台', '读当前属性值至后台', '攻击+10,生命+2,附命+2,抗飞+1,等级+5,食物+2', '读属性上限值至后台', '攻限+10,命限+10,食限+10',
 	'读当前选中物品至后台', '给32个白桦木', '给1个附魔叉', '替换副手为一个叉子', '保存玩家所有物品列表至pit.json并清空',
-	'读pit.json到当前玩家', '读玩家当前效果列表到后台', '设置玩家临时存储的效果列表'];
+	'读pit.json到当前玩家', '读玩家当前效果列表到后台', '设置玩家临时存储的效果列表', '显示欢迎一个血条', '清除欢迎血条'];
 
 // 定义前缀、取消前缀
 function cusName(p) {
@@ -222,6 +222,12 @@ function testcasefunc(p) {
 					{
 						setPlayerEffects(uuid, tmpeff);
 					}
+					break;
+				case "20":
+					setPlayerBossBar(uuid, '欢迎使用JSRunner自定义血条！', Math.random());
+					break;
+				case "21":
+					removePlayerBossBar(uuid);
 					break;
 				case "null":
 					log('玩家' + p + '取消了选择测试项。');

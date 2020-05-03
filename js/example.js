@@ -74,7 +74,7 @@ function afterUseItem(e) {
 // 设置使用物品后事件监听器
 setAfterActListener('onUseItem', afterUseItem);
 
-// 放置方块后监听
+// 放置方块后回调
 setAfterActListener('onPlacedBlock', function (e) {
 	var je = JSON.parse(e);
 	if (je.result) {
