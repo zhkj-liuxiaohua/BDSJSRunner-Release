@@ -47,7 +47,7 @@
 // 函数名：TimeNow
 // 功能：返回一个当前时间的字符串
 // 参数个数：0个
-// 返回值 - 字符串
+// 返回值：字符串
 [例] let t = TimeNow()
 
 // 函数名：setShareData
@@ -141,13 +141,29 @@
 // 参数类型：字符串
 // 参数详解：cmd - 语法正确的MC指令
 // 返回值：是否正常执行
-[例] runcmd('me 你好 js')
+[例] let r = runcmd('me 你好 js')
 
 // 函数名：getOnLinePlayers
 // 功能：获取在线玩家列表
 // 参数个数：0个
 // 返回值：玩家列表的Json字符串
 [例] let v = getOnLinePlayers()
+
+// 函数名：getStructure
+// 功能：获取一个结构
+// 参数个数：5个
+// 参数类型：整型，字符串，字符串，布尔型，布尔型
+// 参数详解：did - 地图维度，posa - 坐标JSON字符串，posb - 坐标JSON字符串，exent - 是否导出实体，exblk - 是否导出方块
+// 返回值：结构json字符串
+[例] let d = getStructure(0, '{"x":0, "y":4, "z":0}', '{"x":10, "y":14, "z":10}', false, true)
+
+// 函数名：setStructure
+// 功能：设置一个结构到指定位置
+// 参数个数：6个
+// 参数类型：字符串，整型，字符串，整型，布尔型，布尔型
+// 参数详解：strnbt - 结构JSON字符串，did - 地图维度，posa - 起始点坐标JSON字符串，rot - 旋转类型，exent - 是否导出实体，exblk - 是否导出方块
+// 返回值：是否设置成功
+[例] let r = setStructure(fileReadAllText('data.json'), 0, '{"x":0, "y":4, "z":0}', 0, true, true)
 
 // 函数名：reNameByUuid
 // 功能：重命名一个指定的玩家名
@@ -156,7 +172,7 @@
 // 参数详解：uuid - 在线玩家的uuid字符串，newName - 新的名称
 // 返回值：是否命名成功
 // （备注：该函数可能不会变更客户端实际显示名）
-[例] reNameByUuid('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '请叫我LiuXiaohua')
+[例] let r = reNameByUuid('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '请叫我LiuXiaohua')
 
 // 函数名：getPlayerAbilities
 // 功能：获取玩家能力表
