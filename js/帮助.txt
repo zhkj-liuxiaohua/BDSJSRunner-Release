@@ -153,7 +153,7 @@
 // 功能：获取一个结构
 // 参数个数：5个
 // 参数类型：整型，字符串，字符串，布尔型，布尔型
-// 参数详解：did - 地图维度，posa - 坐标JSON字符串，posb - 坐标JSON字符串，exent - 是否导出实体，exblk - 是否导出方块
+// 参数详解：dimensionid - 地图维度，posa - 坐标JSON字符串，posb - 坐标JSON字符串，exent - 是否导出实体，exblk - 是否导出方块
 // 返回值：结构json字符串
 [例] let d = getStructure(0, '{"x":0, "y":4, "z":0}', '{"x":10, "y":14, "z":10}', false, true)
 
@@ -161,7 +161,7 @@
 // 功能：设置一个结构到指定位置
 // 参数个数：6个
 // 参数类型：字符串，整型，字符串，整型，布尔型，布尔型
-// 参数详解：strnbt - 结构JSON字符串，did - 地图维度，posa - 起始点坐标JSON字符串，rot - 旋转类型，exent - 是否导出实体，exblk - 是否导出方块
+// 参数详解：strnbt - 结构JSON字符串，dimensionid - 地图维度，posa - 起始点坐标JSON字符串，rot - 旋转类型，exent - 是否导入实体，exblk - 是否导入方块
 // 返回值：是否设置成功
 [例] let r = setStructure(fileReadAllText('data.json'), 0, '{"x":0, "y":4, "z":0}', 0, true, true)
 
