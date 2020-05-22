@@ -300,6 +300,23 @@
 // 返回值：是否清除成功
 [例] let r = removePlayerBossBar('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9')
 
+// 函数名：setPlayerSidebar
+// 功能：设置玩家自定义侧边栏临时计分板
+// 参数个数：3个
+// 参数类型：字符串，字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，title - 侧边栏标题，list - 列表字符串数组
+// 返回值：是否设置成功
+// （注：列表总是从第1行开始，总计不超过15行）
+[例] let r = setPlayerSidebar('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '自定义侧边栏', '["第一行", "第二行", "我在哪行?    "]')
+
+// 函数名：removePlayerSidebar
+// 功能：清除玩家自定义侧边栏
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：uuid - 在线玩家的uuid字符串
+// 返回值：是否清除成功
+[例] let r = removePlayerSidebar('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9')
+
 // 函数名：selectPlayer
 // 功能：查询在线玩家基本信息
 // 参数个数：1个
