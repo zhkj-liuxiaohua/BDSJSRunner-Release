@@ -200,13 +200,22 @@
 [例] let t = getPlayerAttributes('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9')
 
 // 函数名：setPlayerAttributes
-// 功能：设置玩家属性表
+// 功能：设置玩家属性默认值表
 // 参数个数：2个
 // 参数类型：字符串，字符串
-// 参数详解：uuid - 在线玩家的uuid字符串，newAttributes - 新属性json数据字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，newAttributes - 新属性默认值json数据字符串
+// 返回值：是否设置成功
+// （备注：该函数可能不会变更客户端实际显示值；该函数可能导致玩家死后重生不会恢复初始属性）
+[例] let r = setPlayerAttributes('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '{"attack_damage": 9999}')
+
+// 函数名：setPlayerTempAttributes
+// 功能：设置玩家属性临时值表
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，newTempAttributes - 新属性临时值json数据字符串
 // 返回值：是否设置成功
 // （备注：该函数可能不会变更客户端实际显示值）
-[例] let r = setPlayerAttributes('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '{"attack_damage": 9999}')
+[例] let r = setPlayerTempAttributes('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '{"hunger": 10}')
 
 // 函数名：getPlayerMaxAttributes
 // 功能：获取玩家属性上限值表
