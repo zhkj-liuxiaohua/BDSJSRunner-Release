@@ -326,6 +326,23 @@
 // 返回值：是否清除成功
 [例] let r = removePlayerSidebar('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9')
 
+// 函数名：getPlayerPermissionAndGametype
+// 功能：获取玩家权限与游戏模式
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：uuid - 在线玩家的uuid字符串
+// 返回值：权限与模式的json字符串
+[例] let t = getPlayerPermissionAndGametype('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9')
+
+// 函数名：setPlayerPermissionAndGametype
+// 功能：设置玩家权限与游戏模式
+// 参数个数：2个
+// 参数类型：字符串，字符串
+// 参数详解：uuid - 在线玩家的uuid字符串，newModes - 新权限或模式json数据字符串
+// 返回值：是否设置成功
+// （备注：特定条件下可能不会变更游戏内实际能力）
+[例] let r = setPlayerPermissionAndGametype('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '{"gamemode" : 3}')
+
 // 函数名：selectPlayer
 // 功能：查询在线玩家基本信息
 // 参数个数：1个

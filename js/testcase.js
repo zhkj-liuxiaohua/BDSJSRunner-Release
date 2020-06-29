@@ -32,7 +32,7 @@ const strtest = ['后台指令tell', '前缀/去前缀名', '穿墙能力开/关
 	'查询当前状态至后台', '读当前属性值至后台', '临时攻击+10,生命+2,附命+2,抗飞+1,等级+5,食物+2', '读属性上限值至后台', '攻限+10,命限+10,食限+10',
 	'读当前选中物品至后台', '给32个白桦木', '给1个附魔叉', '替换副手为一个叉子', '保存玩家所有物品列表至pit.json并清空',
 	'读pit.json到当前玩家', '读玩家当前效果列表到后台', '设置玩家临时存储的效果列表', '显示欢迎一个血条', '清除欢迎血条',
-	'显示一个带统计的自定义侧边栏', '移除自定义侧边栏',
+	'显示一个带统计的自定义侧边栏', '移除自定义侧边栏', '读当前权限与游戏模式至后台', '切换op/visitor，生存/生存观察者模式',
 	'导出当前位置+长宽高x10的结构到st1.json','读结构st1.json到当前位置'];
 
 // 定义前缀、取消前缀
@@ -250,6 +250,25 @@ function testcasefunc(p) {
 					removePlayerSidebar(uuid);
 					break;
 				case "24":
+					log(getPlayerPermissionAndGametype(uuid));
+					break;
+				case "25":
+					let st = getPlayerPermissionAndGametype(uuid);
+					let t = JSON.parse(st);
+					if (t != null) {
+						if (t.gametype == 0) {
+							t.gametype = 3;
+						} else {
+							t.gametype = 0;
+						}
+						if (t.permission == 0) {
+							t.permission = 2;
+						} else
+							t.permission = 0;
+						setPlayerPermissionAndGametype(uuid, JSON.stringify(t));
+                    }
+					break;
+				case "26":
 					{
 						let posa = e.XYZ;
 						let posb = {};
@@ -263,7 +282,7 @@ function testcasefunc(p) {
 						fileWriteAllText('st1.json', data);
                     }
 					break;
-				case "25":
+				case "27":
 					{
 						let data = fileReadAllText('st1.json');
 						setStructure(data, e.dimensionid, JSON.stringify(e.XYZ), 0, true, true);
