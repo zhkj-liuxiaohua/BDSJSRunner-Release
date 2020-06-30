@@ -477,6 +477,7 @@ e - 回传数据
  "onInputText" - 玩家输入文本监听
  "onInputCommand" - 玩家输入指令监听
  "onBlockCmd" - 命令方块(矿车)执行指令监听
+ "onNpcCmd" - NPC执行指令监听
  "onCommandBlockUpdate" - 玩家更新命令方块监听
  "onLevelExplode" - 爆炸监听
  "onChat" - 聊天监听

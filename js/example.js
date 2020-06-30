@@ -300,6 +300,12 @@ setBeforeActListener('onLevelExplode', function (e) {
 //	return true;	// 此处或可拦截命令方块及命令方块矿车指令的执行
 //});
 
+// NPC指令回调
+//setBeforeActListener('onNpcCmd', function (e) {
+//	let je = JSON.parse(e);
+//	return true;	// 此处或可拦截NPC指令的执行
+//});
+
 // 服务器指令执行输出回调
 //setBeforeActListener('onServerCmdOutput', function (e) {
 //	let je = JSON.parse(e);
