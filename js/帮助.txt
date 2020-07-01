@@ -341,7 +341,7 @@
 // 参数详解：uuid - 在线玩家的uuid字符串，newModes - 新权限或模式json数据字符串
 // 返回值：是否设置成功
 // （备注：特定条件下可能不会变更游戏内实际能力）
-[例] let r = setPlayerPermissionAndGametype('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '{"gamemode" : 3}')
+[例] let r = setPlayerPermissionAndGametype('8f976e22-78bc-3fe1-8ee5-cf5ff56347b9', '{"gametype" : 3}')
 
 // 函数名：selectPlayer
 // 功能：查询在线玩家基本信息
